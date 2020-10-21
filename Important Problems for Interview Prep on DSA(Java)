@@ -1,0 +1,740 @@
+Topic : Linked Lists
+*****************************************************************************************************************************    
+1)Finding Middle Element of a Linked List
+https://practice.geeksforgeeks.org/problems/finding-middle-element-in-a-linked-list/1
+
+Code:
+
+class Solution
+{
+    int getMiddle(Node head)
+    {
+         // Your code here.
+         if(head==null)
+         {
+             return 0;
+         }
+         Node fast=head;
+         Node slow=head;
+         while(fast!=null && fast.next!=null)
+         {
+             slow=slow.next;
+             fast=fast.next.next;
+         }
+         return slow.data;
+         
+    }
+}
+
+*****************************************************************************************************************************    
+
+2)Reverse a linked list
+https://practice.geeksforgeeks.org/problems/reverse-a-linked-list/1
+
+Code:
+
+Iterative:
+
+class ReverseLL
+{
+    // This function should reverse linked list and return
+    // head of the modified linked list.
+    Node reverseList(Node head)
+    {
+        // code here
+        if(head==null || head.next==null)
+        {
+            return head;
+        }
+        Node prev=null;
+        Node next=head;
+        Node current=head;
+     
+        while(current!=null)
+        {
+            next=current.next;
+            current.next=prev;
+            prev=current;
+            current=next;
+        }
+        return prev;
+    }
+}
+***********************************************
+Recursive:
+
+Node reverseList(Node head)
+    {
+       
+        if(head.next==null)
+        {
+            return head;
+        }
+        Node newhead=reverseList(head.next);
+        head.next.next=head;
+        head.next=null;
+        return newhead;
+    }
+    
+*****************************************************************************************************************************    
+3)Rotate a Linked List
+https://practice.geeksforgeeks.org/problems/rotate-a-linked-list/1
+
+Code:
+
+public Node rotate(Node head, int k) {
+        // add code here
+        if(head==null)
+        {
+            return head;
+        }
+        Node cont=head;
+        Node prev=null;
+        int size=0;
+        Node end=head;
+        while(end.next!=null)
+        {
+            end=end.next;
+            size++;
+        }
+        size=size+1;
+        if(size==k)
+        {
+            return head;
+        }
+        if(k>size)
+        {
+            k=k%(size);
+        }
+        while(k-->=1)
+        {
+            prev=head;
+            head=head.next;
+            
+        }
+        Node newhead=head;
+        end.next=cont;
+        prev.next=null;
+        return newhead;
+      
+    }
+    
+ ***************************************************************************************************************** 
+ 4)Reverse a Linked List in groups of given size. 
+ https://practice.geeksforgeeks.org/problems/reverse-a-linked-list-in-groups-of-given-size/1
+ 
+ Code:
+ 
+ public static Node reverse(Node node, int k)
+    {
+        //Your code here
+        Node prev=null;
+        Node next=node;
+        Node current=node;
+        int n=k;
+        while(n>=1 && current!=null)
+        {
+            next=current.next;
+            current.next=prev;
+            prev=current;
+            current=next;
+            n--;
+        }
+        if(next==null || next.next==null)
+        {
+            node.next=next;
+            return prev;
+        }
+        node.next=reverse(next,k);
+        return prev;
+        
+    }
+****************************************************************************************************************************************  
+5)Intersection Point in Y Shapped Linked Lists 
+https://practice.geeksforgeeks.org/problems/intersection-point-in-y-shapped-linked-lists/1/
+
+Code:
+
+
+class Intersect
+{
+	int intersectPoint(Node headA, Node headB)
+	{
+         // code here
+         Node head1=headA;
+         Node head2=headB;
+         int len1=0;
+         int len2=0;
+         while(head1!=null)
+         {
+             head1=head1.next;
+             len1++;
+         }
+         while(head2!=null)
+         {
+             head2=head2.next;
+             len2++;
+         }
+         int len=Math.abs(len1-len2);
+         if(len1>len2)
+         {
+             head1=headA;
+             head2=headB;
+         }
+         else
+         {
+             head1=headB;
+             head2=headA;
+         }
+         while(len>=1)
+         {
+             head1=head1.next;
+             len--;
+         }
+         while(head1!=null)
+         {
+             head1=head1.next;
+             head2=head2.next;
+             if(head1==head2)
+             {
+                 return head2.data;
+             }
+         }
+         return head2.data;
+	}
+}
+
+******************************************************************************************************************
+6)Detect Loop in linked list 
+https://practice.geeksforgeeks.org/problems/detect-loop-in-linked-list/1
+
+Code:
+
+public static boolean detectLoop(Node head){
+        // Add code here
+        Node fast=head;
+        Node slow=head;
+        while(fast!=null && fast.next!=null)
+        {
+            fast=fast.next.next;
+            slow=slow.next;
+            if(fast==slow)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+*************************************************************************************************************************************
+7)Remove loop in Linked List
+https://practice.geeksforgeeks.org/problems/remove-loop-in-linked-list/1
+
+Code:
+
+public static void removeLoop(Node head){
+        // code here
+        // remove the loop without losing any nodes
+        Node fast=head;
+        Node prev=head;
+        Node slow=head;
+        while(fast!=null && fast.next!=null)
+        {
+            fast=fast.next.next;
+            prev=slow;
+            slow=slow.next;
+            
+            if(fast==slow)
+            {
+                if(fast==head)
+                {
+                    prev.next=null;
+                    return;
+                }
+                slow=head;
+                break;
+            }
+           
+        }
+        if(fast==null || fast.next==null)
+        {
+            return;
+        }
+        if(slow==fast)
+        {
+            
+        }
+         while(slow!=fast)
+            {
+                 prev=fast;
+                fast=fast.next;
+               
+                slow=slow.next;
+            }
+            prev.next=null;
+            
+
+        
+    }
+**************************************************************************************************************
+8)Nth node from end of linked list
+https://practice.geeksforgeeks.org/problems/nth-node-from-end-of-linked-list/1
+
+Code:
+
+ int getNthFromLast(Node head, int n)
+    {
+    	// Your code here	
+    	Node slow=head;
+    	Node fast=head;
+    	Node tmp=head;
+    	int size=0;
+    	while(tmp!=null)
+    	{
+    	    tmp=tmp.next;
+    	    size++;
+    	}
+    	if(n>size)
+    	{
+    	    return -1;
+    	}
+    	while(n>=1 && fast!=null)
+    	{
+    	    fast=fast.next;
+    	    n--;
+    	}
+    	while(fast!=null)
+    	{
+    	    fast=fast.next;
+    	    slow=slow.next;
+    	}
+    	return slow.data;
+    	
+    }
+    
+*************************************************************************************************************************
+9)Flattening a Linked List 
+https://practice.geeksforgeeks.org/problems/flattening-a-linked-list/1
+
+Code:
+
+class GfG
+{
+    Node sortedMerge(Node head1,Node head2)
+    {
+        if(head1==null)
+        {
+            return head2;
+        }
+        if(head2==null)
+        {
+            return head1;
+        }
+        Node p=head1;
+        Node head=null;
+        Node q=head2;
+        Node s=null;
+        if(p.data<q.data)
+        {
+             head=p;
+            s=p;
+            p=p.bottom;
+        }
+        else
+        {
+            head=q;
+            s=q;
+            q=q.bottom;
+        }
+        while(p!=null && q!=null)
+        {
+            if(p.data<q.data)
+            {
+                s.bottom=p;
+                s=p;
+                p=p.bottom;
+            }
+            else
+            {
+                s.bottom=q;
+                s=q;
+                q=q.bottom;
+            }
+        }
+        if(p==null)
+        {
+            s.bottom=q;
+        }
+        if(q==null)
+        {
+            s.bottom=p;
+        }
+        return head;
+        
+    }
+    Node flatten(Node root)
+    {
+	// Your code here
+	Node next=root.next;
+	while(next!=null)
+	{
+	    root=sortedMerge(root,next);
+	    next=next.next;
+
+	}
+	return root;
+	
+    }
+}
+******************************************************************************************************************************************************************
+10)Merge two sorted linked lists 
+https://practice.geeksforgeeks.org/problems/merge-two-sorted-linked-lists/1
+
+Code:
+
+Iterative:
+
+Node sortedMerge(Node head1,Node head2)
+    {
+        if(head1==null)
+        {
+            return head2;
+        }
+        if(head2==null)
+        {
+            return head1;
+        }
+        Node p=head1;
+        Node head=null;
+        Node q=head2;
+        Node s=null;
+        if(p.data<q.data)
+        {
+             head=p;
+            s=p;
+            p=p.next;
+        }
+        else
+        {
+            head=q;
+            s=q;
+            q=q.next;
+        }
+        while(p!=null && q!=null)
+        {
+            if(p.data<q.data)
+            {
+                s.next=p;
+                s=p;
+                p=p.next;
+            }
+            else
+            {
+                s.next=q;
+                s=q;
+                q=q.next;
+            }
+        }
+        if(p==null)
+        {
+            s.next=q;
+        }
+        if(q==null)
+        {
+            s.next=p;
+        }
+        return head;
+    
+   }
+ *************************************  
+ Recursive:
+ 
+ 
+ Node sortedMerge(Node head1,Node head2)
+   {
+       Node head=null;
+       if(head1==null)
+       {
+           return head2;
+       }
+       if(head2==null)
+       {
+           return head1;
+       }
+       if(head1.data<head2.data)
+       {
+            head=head1;
+           head1.next=sortedMerge(head1.next,head2);
+       }
+       else
+       {
+            head=head2;
+           head.next=sortedMerge(head1,head2.next);
+       }
+       return head;
+   }
+   
+   *************************************************************************************************************************************
+   11)Intersection Point in Y Shapped Linked Lists 
+   https://practice.geeksforgeeks.org/problems/intersection-point-in-y-shapped-linked-lists/1
+   
+   ***Same as 5th question.
+   ************************************************************************************************************************************
+   12)Pairwise swap elements of a linked list 
+   https://practice.geeksforgeeks.org/problems/pairwise-swap-elements-of-a-linked-list-by-swapping-data/1#
+   
+   Code:
+   
+   public Node pairwiseSwap(Node head)
+    {
+        // code here
+        if(head==null || head.next==null)
+        {
+            return head;
+        }
+        Node p=head;
+        Node next=head;
+        Node q=head;
+        Node newhead=p.next;
+        while(p!=null && p.next!=null)
+        {
+            q=p.next;
+            next=q.next;
+            q.next=p;
+            if(next==null || next.next==null)
+            {
+                p.next=next;
+                return newhead;
+            }
+            p.next=next.next;
+            p=next;
+        }
+        return newhead;
+    }
+************************************************************************************************************************************************
+13)Add two numbers represented by linked lists 
+https://practice.geeksforgeeks.org/problems/add-two-numbers-represented-by-linked-lists/1
+
+Code:
+
+
+************************************************************************************************************************************************
+14)Check if Linked List is Palindrome 
+https://practice.geeksforgeeks.org/problems/check-if-linked-list-is-pallindrome/1#
+
+
+Code:
+
+Node reverse(Node head)
+    {
+         Node prev=null;
+        Node next=head;
+        Node current=head;
+        Node tmp=head;
+        while(current!=null)
+        {
+            next=current.next;
+            current.next=prev;
+            prev=current;
+            current=next;
+        }
+        return prev;
+    }
+    boolean isPalindrome(Node head) 
+    {
+        if(head==null || head.next==null)
+        {
+            return true;
+        }
+        //Your code here
+        Node fast=head;
+        Node slow=head;
+        while(fast!=null && fast.next!=null)
+        {
+            fast=fast.next.next;
+            slow=slow.next;
+        }
+        slow=reverse(slow);
+        fast=head;
+        while(fast!=null && slow!=null)
+        {
+            if(fast.data!=slow.data)
+            {
+                return false;
+            }
+            fast=fast.next;
+            slow=slow.next;
+        }
+        return true;
+  
+    }    
+******************************************************************************************************************************************
+15)Implement Queue using Linked List 
+https://practice.geeksforgeeks.org/problems/implement-queue-using-linked-list/1
+
+Code:
+
+class MyQueue
+{
+   
+    // This function should add an item at
+    // rear
+    QueueNode front=null;
+    QueueNode rear=null;
+	void push(int a)
+	{
+        // Your code here
+        QueueNode node=new QueueNode(a);
+        if(front==null)
+        {
+            front=node;
+            rear=node;
+            return;
+        }
+        rear.next=node;
+        rear=node;
+	}
+	
+    // This function should remove front
+    // item from queue and should return
+    // the removed item.
+	int pop()
+	{
+        // Your code here
+        QueueNode next=null;
+        if(front!=null)
+        {
+                    int val=front.data;
+         next=front.next;
+        front.next=null;
+        front=next;
+        return val;
+
+        }
+            return -1;        
+        
+	}
+}
+
+*****************************************************************************************************************************************
+16)Implement Stack using Linked List 
+https://practice.geeksforgeeks.org/problems/implement-stack-using-linked-list/1
+
+Code:
+
+class MyStack {
+
+    // Note that top is by default null
+    // in Java
+    StackNode top=null;
+
+    void push(int a) {
+        // Add your code here
+        StackNode node=new StackNode(a);
+        
+        node.next=top;
+        top=node;
+        
+        
+    }
+    int pop() {
+        // Add your code here
+        if(top==null)
+        {
+            return -1;
+        }
+        int val=top.data;
+        top=top.next;
+        return val;
+    }
+}
+*****************************************************************************************************************************************
+17)Given a linked list of 0s, 1s and 2s, sort it. 
+https://practice.geeksforgeeks.org/problems/given-a-linked-list-of-0s-1s-and-2s-sort-it/1
+
+Code:
+
+class LinkedList
+{
+    static Node segregate(Node head)
+    {
+        // add your code here
+        int cnt0=0;
+        int cnt1=0;
+        int cnt2=0;
+        Node current=head;
+        while(current!=null)
+        {
+            if(current.data==0)
+            {
+                cnt0++;
+            }
+            if(current.data==2)
+            {
+                cnt2++;
+            }
+            if(current.data==1)
+            {
+                cnt1++;
+            }
+            current=current.next;
+        }
+        int tmp0=cnt0;
+        int tmp1=cnt1;
+        int tmp2=cnt2;
+        current=head;
+        Node newhead=head;
+        while(cnt0>=1)
+        {
+            
+            current.data=0;
+            if(cnt0==tmp0)
+            {
+                head=current;
+            }
+            cnt0--;
+            current=current.next;
+        }
+        while(cnt1>=1)
+        {
+            current.data=1;
+            if(cnt1==tmp1 && tmp0==0 )
+            {
+                head=current;
+            }
+            cnt1--;
+            current=current.next;
+        }
+        while(cnt2>=1)
+        {
+            current.data=2;
+            if(cnt2==tmp2 && tmp1==0 && tmp0==0 )
+            {
+                head=current;
+            }
+            cnt2--;
+            current=current.next;
+        }
+        return head;
+        
+    }
+}
+
+******************************************************************************************************************************************
+18)Delete without head pointer 
+https://practice.geeksforgeeks.org/problems/delete-without-head-pointer/1
+
+Code:
+
+void deleteNode(Node node)
+    {
+         // Your code here
+         if(node==null)
+         {
+             return;
+         }
+         node.data=node.next.data;
+         node.next=node.next.next;
+         
+    }
+*******************************************************************************************************************************************************
