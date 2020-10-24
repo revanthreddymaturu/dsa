@@ -1,0 +1,690 @@
+Note: Some problems are missing because they require subscription to access those problems.
+
+
+
+Topic: LinkedLists
+*********************************************************************************************************************************************************************
+1)Convert Binary Number in a Linked List to Integer
+https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/submissions/
+
+Code:
+
+class Solution {
+    public int getDecimalValue(ListNode head) {
+        int sum=0;
+        int n=0;
+        int size=0;
+        ListNode current=head;
+        while(current!=null)
+        {
+            size++;
+            current=current.next;
+        }
+        n=size-1;
+        while(head!=null)
+        {
+            sum=sum+head.val*(int)Math.pow(2,n);
+            n--;
+            head=head.next;
+        }
+            return sum;
+    }
+}
+************************************************************************************************************************************************************************
+2) Middle of the Linked List
+https://leetcode.com/problems/middle-of-the-linked-list/
+
+Code:
+
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        ListNode fast=head;
+        ListNode slow=head;
+        while(fast!=null && fast.next!=null)
+        {
+            fast=fast.next.next;
+            slow=slow.next;
+        }
+        return slow;
+    }
+}
+************************************************************************************************************************************************************************
+3)Delete Node in a Linked List
+https://leetcode.com/problems/delete-node-in-a-linked-list/
+
+Code:
+
+class Solution {
+    public void deleteNode(ListNode node) {
+        node.val=node.next.val;
+        node.next=node.next.next;
+    }
+}
+************************************************************************************************************************************************************************
+4)Reverse Linked List
+https://leetcode.com/problems/reverse-linked-list/
+
+Code:
+
+Iterative:
+
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode prev=null;
+        ListNode next=head;
+        ListNode current=head;
+        while(current!=null)
+        {
+            next=current.next;
+            current.next=prev;
+            prev=current;
+            current=next;
+        }
+        return prev;
+    }
+    
+  
+}
+**********************************************************
+Recursive:
+
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if(head==null || head.next==null)
+        {
+            return head;
+        }
+        ListNode newhead=reverseList(head.next);
+        head.next.next=head;
+        head.next=null;
+        return newhead;
+    }
+}
+************************************************************************************************************************************************************************
+5) Merge Two Sorted Lists
+https://leetcode.com/problems/merge-two-sorted-lists/
+
+Code:
+
+Iterative:
+
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if(l1==null)
+        {
+            return l2;
+        }
+        if(l2==null)
+        {
+            return l1;
+        }
+        ListNode head1=l1;
+        ListNode head2=l2;
+        ListNode p=null;
+        ListNode q=null;
+        ListNode s=null;
+        ListNode newhead=null;
+        if(head1.val<=head2.val)
+        {
+            newhead=head1;
+            s=head1;
+            p=head1.next;
+            q=head2;
+        }
+        else
+        {
+            newhead=head2;
+            s=head2;
+            p=head1;
+            q=head2.next;
+        }
+        while(p!=null && q!=null)
+        {
+            if(p.val<=q.val)
+            {
+                s.next=p;
+                s=p;
+                p=p.next;
+            }
+            else
+            {
+                s.next=q;
+                s=q;
+                q=q.next;
+            }
+        }
+        if(p==null)
+        {
+            s.next=q;
+        }
+        if(q==null)
+        {
+            s.next=p;
+        }
+        return newhead;
+
+    }
+}
+*****************************************************
+Recursive:
+
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode head=null;
+        if(l1==null)
+        {
+            return l2;
+        }
+        if(l2==null)
+        {
+            return l1;
+        }
+       if(l1.val<l2.val)
+       {
+           head=l1;
+           l1.next=mergeTwoLists(l1.next,l2);
+        }
+        else
+        {
+            head=l2;
+            l2.next=mergeTwoLists(l1,l2.next);
+        }
+        return head;
+    }
+}
+**********************************************************************************************************************************************************
+6)Remove Duplicates from Sorted List
+https://leetcode.com/problems/remove-duplicates-from-sorted-list/
+
+Code:
+
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head==null || head.next==null)
+        {
+            return head;
+        }
+        ListNode newhead=head;
+        while(head!=null && head.next!=null)
+        {
+            if(head.val==head.next.val)
+            {
+                head.next=head.next.next;
+                
+               
+            }
+            else
+            {
+                head=head.next;
+            }
+        }
+        return newhead;
+        
+    }
+}
+*********************************************************************************************************************************************************************
+7) Linked List Cycle
+https://leetcode.com/problems/linked-list-cycle/
+
+Code:
+
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        ListNode slow=head;
+        ListNode fast=head;
+        while(fast!=null && fast.next!=null)
+        {
+            fast=fast.next.next;
+            slow=slow.next;
+            if(slow==fast)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+*********************************************************************************************************************************************************************
+8)Intersection of Two Linked Lists
+https://leetcode.com/problems/intersection-of-two-linked-lists/
+
+Code:
+
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        int len1=0;
+        int len2=0;
+        ListNode p=headA;
+        ListNode q=headB;
+        if(headA==headB)
+        {
+            return headA;
+        }
+        while(p!=null)
+        {
+            p=p.next;
+            len1++;
+        }
+        while(q!=null)
+        {
+            q=q.next;
+            len2++;
+        }
+        if(len1>len2)
+        {
+            p=headA;
+            q=headB;
+        }
+        else
+        {
+            p=headB;
+            q=headA;
+        }
+        int diff=Math.abs(len1-len2);
+        while(diff>=1)
+        {
+            p=p.next;
+            diff--;
+        }
+        while(p!=null)
+        {
+            if(p==q)
+            {
+                return p;
+            }
+            p=p.next;
+            q=q.next;
+            
+        }
+        return null;
+        
+    }
+}
+
+*********************************************************************************************************************************************************************
+9)Palindrome Linked List
+https://leetcode.com/problems/palindrome-linked-list/
+
+Code:
+class Solution {
+    public ListNode reverse(ListNode head)
+    {
+        if(head==null || head.next==null)
+        {
+            return head;
+        }
+        ListNode newhead=reverse(head.next);
+        head.next.next=head;
+        head.next=null;
+        return newhead;
+        
+    }
+    public boolean isPalindrome(ListNode head) {
+        if(head==null || head.next==null)
+        {
+            return true;
+        }
+        ListNode slow=head;
+        ListNode fast=head;
+        while(fast!=null && fast.next!=null)
+        {
+            fast=fast.next.next;
+            
+            slow=slow.next;
+        }
+        slow=reverse(slow);
+        while(head!=null && slow!=null)
+        {
+            if(head.val!=slow.val)
+            {
+                return false;
+            }
+            head=head.next;
+            slow=slow.next;
+        }
+        return true;
+        
+    }
+}
+*********************************************************************************************************************************************************************
+10)Remove Linked List Elements
+https://leetcode.com/problems/remove-linked-list-elements/
+
+Code:
+
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        if(head==null)
+        {
+            return null;
+        }
+        head.next=removeElements(head.next,val);
+        return head.val==val?head.next:head;
+}
+}
+*********************************************************************************************************************************************************************
+11)Next Greater Node In Linked List
+https://leetcode.com/problems/next-greater-node-in-linked-list/
+
+Code:
+class Solution {
+    public int[] nextLargerNodes(ListNode head) {
+        ArrayList<Integer> list=new ArrayList<>();
+        ListNode tmp=head;
+        while(tmp!=null)
+        {
+            list.add(tmp.val);
+            tmp=tmp.next;
+            
+        }
+        int[] output=new int[list.size()];
+        Stack<Integer> st=new Stack<>();
+        
+        for(int i=0;i<list.size();i++)
+        {
+            while(!st.isEmpty() && list.get(st.peek())<list.get(i))
+            {
+                output[st.pop()]=list.get(i);
+            }
+            st.push(i);
+        }
+        return output;
+        
+    }
+}
+*********************************************************************************************************************************************************************
+12)Linked List Components
+https://leetcode.com/problems/linked-list-components/
+
+Code:
+
+
+*********************************************************************************************************************************************************************
+13)Odd Even Linked List
+https://leetcode.com/problems/odd-even-linked-list/
+
+Code:
+
+class Solution {
+    public ListNode oddEvenList(ListNode head) {
+        if(head==null || head.next==null)
+        {
+            return head;
+        }
+        ListNode evenhead=head.next;
+        ListNode oddhead=head;
+        ListNode tmp=head;
+        ListNode tmp2=head.next;
+        while(tmp2!=null &&tmp2.next!=null)
+        {
+            tmp.next=tmp.next.next;
+            tmp=tmp.next;
+            tmp2.next=tmp.next;;
+            tmp2=tmp2.next;
+        }
+        tmp.next=evenhead;
+        return oddhead;
+    }
+}
+*********************************************************************************************************************************************************************
+14)Flatten a Multilevel Doubly Linked List
+https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/
+
+Code:
+
+class Solution {
+    public Node flatten(Node head) {
+       Node tmp=head;
+        Node next=head;
+        Node child=head;
+        Stack<Node> st=new Stack<>();
+        while(head!=null)
+        {
+            if(head.child!=null)
+            {
+                if(head.next!=null)
+                {
+                    st.push(head.next);
+                }
+                head.next=head.child;
+                head.next.prev=head;
+                head.child=null;  
+            }
+            else if(head.next==null && !st.isEmpty())
+            {
+                head.next=st.pop();
+                head.next.prev=head;
+            }
+            else
+            {
+                head=head.next;
+            }
+        }
+        
+        return tmp;
+    }
+}
+*********************************************************************************************************************************************************************
+15)Add Two Numbers II
+https://leetcode.com/problems/add-two-numbers-ii/
+
+Code:
+
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int carry=0;
+        Stack<ListNode> st1=new Stack<>();
+        Stack<ListNode> st2=new Stack<>();
+        ListNode tmp1=l1;
+        ListNode tmp2=l2;
+        while(tmp1!=null)
+        {
+            st1.push(tmp1);
+            tmp1=tmp1.next;
+        }
+        while(tmp2!=null)
+        {
+            st2.push(tmp2);
+            tmp2=tmp2.next;
+        }
+        int sum=0;
+        int val1=0;
+        int val2=0;
+        ListNode list=new ListNode(0);
+        while(!st1.isEmpty() || !st2.isEmpty())
+        {
+            if(!st1.isEmpty())
+            {
+                sum=sum+st1.pop().val;
+            }
+            if(!st2.isEmpty())
+            {
+                sum=sum+st2.pop().val;
+            }
+            list.val=sum%10;
+            ListNode head=new ListNode(sum/10);
+            head.next=list;
+            list=head;
+            sum=sum/10;
+            
+        }
+        return list.val==0?list.next:list;
+    }
+}
+*********************************************************************************************************************************************************************
+16)Split Linked List in Parts
+https://leetcode.com/problems/split-linked-list-in-parts/
+
+Code:
+
+
+*********************************************************************************************************************************************************************
+17)Swap Nodes in Pairs
+https://leetcode.com/problems/swap-nodes-in-pairs/
+
+Code:
+
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        if(head==null || head.next==null)
+        {
+            return head;
+        }
+        ListNode p=head;
+        ListNode q=head;
+        ListNode newhead=head.next;
+        ListNode tmp=head;
+        while(p!=null && p.next!=null)
+        {
+            q=p.next;
+            tmp=q.next;
+            q.next=p;
+            if(tmp==null || tmp.next==null)
+            {
+                p.next=tmp;
+                return newhead;
+            }
+            p.next=tmp.next;
+            p=tmp;  
+        }
+        return newhead;
+    }
+}
+*********************************************************************************************************************************************************************
+18)Convert Sorted List to Binary Search Tree
+https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/
+
+Code:
+
+*********************************************************************************************************************************************************************
+19)Sort List
+https://leetcode.com/problems/sort-list/
+
+Code:
+
+
+*********************************************************************************************************************************************************************
+20)Partition List
+https://leetcode.com/problems/partition-list/
+
+Code:
+
+class Solution {
+    
+    public ListNode partition(ListNode head, int x) {
+        if(head==null || head.next==null)
+        {
+            return head;
+        }
+        ListNode head1=new ListNode(0);
+        ListNode h1=head1;
+        ListNode head2=new ListNode(0);
+        ListNode h2=head2;
+        while(head!=null)
+        {
+            if(head.val<x)
+            {
+                h1.next=new ListNode(head.val);
+                h1=h1.next;
+                head=head.next;
+            }
+            else
+            {
+                h2.next=new ListNode(head.val);
+                h2=h2.next;
+                head=head.next;
+            }
+        }
+        h1.next=head2.next;
+        return head1.next;
+        
+    }
+}
+*********************************************************************************************************************************************************************
+34)Merge k Sorted Lists
+https://leetcode.com/problems/merge-k-sorted-lists/
+
+Code:
+
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if(l1==null)
+        {
+            return l2;
+        }
+        if(l2==null)
+        {
+            return l1;
+        }
+        ListNode head1=l1;
+        ListNode head2=l2;
+        ListNode p=null;
+        ListNode q=null;
+        ListNode s=null;
+        ListNode newhead=null;
+        if(head1.val<=head2.val)
+        {
+            newhead=head1;
+            s=head1;
+            p=head1.next;
+            q=head2;
+        }
+        else
+        {
+            newhead=head2;
+            s=head2;
+            p=head1;
+            q=head2.next;
+        }
+        while(p!=null && q!=null)
+        {
+            if(p.val<=q.val)
+            {
+                s.next=p;
+                s=p;
+                p=p.next;
+            }
+            else
+            {
+                s.next=q;
+                s=q;
+                q=q.next;
+            }
+        }
+        if(p==null)
+        {
+            s.next=q;
+        }
+        if(q==null)
+        {
+            s.next=p;
+        }
+        return newhead;
+
+    }
+
+    public ListNode mergeKLists(ListNode[] lists) {
+        int size=lists.length;
+        ListNode head=null;
+        ListNode head1=null;
+        ListNode head2=null;
+        if(size==0)
+        {
+            return null;
+        }
+        if(size==1)
+        {
+            return lists[0];
+        }
+        for(int i=0;i<size;i=i+1)
+        {
+            head2=lists[i];
+            
+            head1=mergeTwoLists(head1,head2);
+                
+        }
+        return head1;
+    }
+}
+*********************************************************************************************************************************************************************
