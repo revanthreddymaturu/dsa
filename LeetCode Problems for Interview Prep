@@ -1,4 +1,4 @@
-Note: Some problems are missing because they require subscription to access those problems.
+Note: Some problems are missing because they require premium subscription to access those problems :(
 
 
 
@@ -557,13 +557,88 @@ https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/
 
 Code:
 
+class Solution {
+    public TreeNode sortedListToBST(ListNode head) {
+        if(head==null)
+        {
+            return null;
+        }
+        ListNode fast=head;
+        ListNode slow=head;
+        ListNode prev=head;
+        while(fast!=null && fast.next!=null)
+        {
+            prev=slow;
+            fast=fast.next.next;
+            slow=slow.next;
+        }
+        if(prev!=null)
+        {
+            prev.next=null;
+        }
+        ListNode mid=slow;
+        TreeNode root=new TreeNode(mid.val);
+         if(mid==head)
+        {
+            return root;
+        }
+        root.left=sortedListToBST(head);
+        root.right=sortedListToBST(mid.next);
+        return root;
+    }
+}
 *********************************************************************************************************************************************************************
 19)Sort List
 https://leetcode.com/problems/sort-list/
 
 Code:
 
-
+class Solution {
+    public ListNode merge(ListNode a,ListNode b)
+    {
+        ListNode tmp=new ListNode();
+        ListNode tmphead=tmp;
+        while(a!=null && b!=null)
+        {
+            if(a.val<b.val)
+            {
+                tmp.next=a;
+                a=a.next;
+            }
+            else
+            {
+                tmp.next=b;
+                b=b.next;
+            }
+            tmp=tmp.next;
+        }
+        tmp.next=(a==null)?b:a;
+        return tmphead.next;
+    }
+    public ListNode sortList(ListNode head) {
+        if(head==null||head.next==null)
+        {
+            return head;
+        }
+        ListNode slow=head;
+        ListNode fast=head;
+        ListNode prev=null;
+        while(fast!=null && fast.next!=null)
+        {
+            prev=slow;
+            fast=fast.next.next;
+            slow=slow.next;
+        }
+        if(prev!=null)
+        {
+            prev.next=null;
+        }
+        ListNode l1=sortList(head);
+        ListNode l2=sortList(slow);
+        
+        return merge(l1,l2);
+    }
+}
 *********************************************************************************************************************************************************************
 20)Partition List
 https://leetcode.com/problems/partition-list/
@@ -602,7 +677,56 @@ class Solution {
     }
 }
 *********************************************************************************************************************************************************************
-34)Merge k Sorted Lists
+21)Insertion Sort List
+https://leetcode.com/problems/insertion-sort-list/
+
+Code:
+
+
+*********************************************************************************************************************************************************************
+22)Remove Zero Sum Consecutive Nodes from Linked List
+https://leetcode.com/problems/remove-zero-sum-consecutive-nodes-from-linked-list/
+
+Code:
+
+
+*********************************************************************************************************************************************************************
+23)Linked List in Binary Tree
+https://leetcode.com/problems/linked-list-in-binary-tree/
+
+Code:
+
+
+*********************************************************************************************************************************************************************
+24)Reverse Linked List II
+https://leetcode.com/problems/reverse-linked-list-ii/
+
+Code:
+
+
+*********************************************************************************************************************************************************************
+25)Reorder List
+https://leetcode.com/problems/reorder-list/
+
+Code:
+
+
+*********************************************************************************************************************************************************************
+26)
+*********************************************************************************************************************************************************************
+27)
+*********************************************************************************************************************************************************************
+28)
+*********************************************************************************************************************************************************************
+29)
+*********************************************************************************************************************************************************************
+30)
+*********************************************************************************************************************************************************************
+31)
+*********************************************************************************************************************************************************************
+32)
+*********************************************************************************************************************************************************************
+33)Merge k Sorted Lists
 https://leetcode.com/problems/merge-k-sorted-lists/
 
 Code:
