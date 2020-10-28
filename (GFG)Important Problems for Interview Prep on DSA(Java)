@@ -857,9 +857,91 @@ https://practice.geeksforgeeks.org/problems/queue-using-two-stacks/1
 Code:
 
 
+class StackQueue
+{
+    Stack<Integer> st1 = new Stack<Integer>();
+    Stack<Integer> st2 = new Stack<Integer>();
+
+    /* The method insert to push element
+       into the queue */
+    void Push(int x)
+    {
+	   // Your code here
+	  st1.push(x);
+	   
+    }
+	
+    
+    /* The method remove which return the
+      element popped out of the queue*/
+    int Pop()
+    {
+	   // Your code here
+	   if(st1.isEmpty())
+	   {
+	       return -1;
+	   }
+	   else
+	   {
+	       while(!st1.isEmpty())
+	       {
+	           st2.push(st1.pop());
+	       }
+	       int x=st2.pop();
+	       while(!st2.isEmpty())
+	       {
+	           st1.push(st2.pop());
+	       }
+	       return x;
+	       
+	   }
+    }
+}
 *******************************************************************************************************************************************************
 4)Stack using two queues 
 https://practice.geeksforgeeks.org/problems/stack-using-two-queues/1
 
 Code:
 
+class Queues
+{
+    Queue<Integer> q1 = new LinkedList<Integer>();
+    Queue<Integer> q2 = new LinkedList<Integer>();
+    
+    /*The method pop which return the element poped out of the stack*/
+    int pop()
+    {
+	    // Your code here
+	    int x=-1;
+	    if(q1.isEmpty())
+	    {
+	        return -1;
+	    }
+	    else
+	    {
+	        while(!q1.isEmpty())
+	        {
+	             x=q1.poll();
+	            if(q1.isEmpty())
+	            {
+	                break;
+	            }
+	            q2.offer(x);
+	        }
+	        while(!q2.isEmpty())
+	        {
+	            q1.offer(q2.poll());
+	        }
+	        return x;
+	    }
+	    
+    }
+	
+    /* The method push to push element into the stack */
+    void push(int a)
+    {
+	    // Your code here
+	    q1.offer(a);
+    }
+}
+*******************************************************************************************************************************************************
