@@ -518,6 +518,120 @@ https://practice.geeksforgeeks.org/problems/add-two-numbers-represented-by-linke
 Code:
 
 
+class Solution{
+    
+    static Node addTwoLists(Node first, Node second){
+        if(first==null)
+        {
+            return second;
+        }
+        if(second==null)
+        {
+            return first;
+        }
+        first=reverse(first);
+        second=reverse(second);
+        Node prevf=null;
+        Node prevs=null;
+        Node newhead=null;
+        int prevcarr=0;
+        int prescarr=0;
+        int digit=0;
+        int sum=0;
+        Node current=null;
+        while(first!=null && second!=null)
+        {
+            prevcarr=prescarr;
+            sum=first.data+second.data+prevcarr;
+           // if(sum>=10)
+           // {
+                digit=(sum)%10;
+                sum=sum/10;
+                prescarr=sum%10;
+          //  }
+           /* else
+            {
+                digit=sum;
+                prescarr=0;
+            }*/
+            Node node=new Node(digit);
+            if(current==null)
+            {
+                 newhead=node;
+                current=node;
+                first=first.next;
+            second=second.next;
+    
+                continue;
+            }
+            current.next=node;
+            current=node;
+            first=first.next;
+            second=second.next;
+            
+        }
+            while(second!=null)
+            {
+                prevcarr=prescarr;
+                sum=second.data+prevcarr;
+                digit=(sum)%10;
+                sum=sum/10;
+                prescarr=sum%10;
+
+                    Node node=new Node(digit);
+                    current.next=node;
+                    current=node;
+                    second=second.next;
+            }
+        
+    
+            while(first!=null)
+            {
+                prevcarr=prescarr;
+                sum=first.data+prevcarr;
+                digit=(sum)%10;
+                sum=sum/10;
+                prescarr=sum%10;
+
+                Node node=new Node(digit);
+                current.next=node;
+                current=node;
+                first=first.next;
+            }
+                    if(first==null && second==null && prescarr!=0)
+        {
+            current.next=new Node(prescarr);
+            
+        }
+
+        
+        newhead=reverse(newhead);
+        return newhead;
+        
+    }
+    static Node reverse(Node head)
+    {
+        if(head==null || head.next==null)
+        {
+            return head;
+        }
+        Node prev=null;
+        Node next=head;
+        Node current=head;
+     
+        while(current!=null)
+        {
+            next=current.next;
+            current.next=prev;
+            prev=current;
+            current=next;
+        }
+        return prev;
+
+    }
+}
+
+
 ************************************************************************************************************************************************
 14)Check if Linked List is Palindrome 
 https://practice.geeksforgeeks.org/problems/check-if-linked-list-is-pallindrome/1#
